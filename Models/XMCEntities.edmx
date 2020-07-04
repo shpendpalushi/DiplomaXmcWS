@@ -1,0 +1,676 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="XMCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="XMC_Dokument">
+          <Key>
+            <PropertyRef Name="XMCDokument_Id" />
+          </Key>
+          <Property Name="XMCDokument_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dokument_Path" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Dokument_Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dokument_Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="XMCTask_Id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XMCPozicion">
+          <Key>
+            <PropertyRef Name="XMCPozicion_Id" />
+          </Key>
+          <Property Name="XMCPozicion_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pozicion_Name" Type="nvarchar" MaxLength="155" Nullable="false" />
+          <Property Name="Pozicion_Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="XMCProjekt">
+          <Key>
+            <PropertyRef Name="XMCProjekt_Id" />
+          </Key>
+          <Property Name="XMCProjekt_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Projekt_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Projekt_Hours_Precalculated" Type="int" Nullable="false" />
+          <Property Name="Projekt_Description" Type="nvarchar" MaxLength="755" />
+        </EntityType>
+        <EntityType Name="XMCPune">
+          <Key>
+            <PropertyRef Name="XMCPune_Id" />
+          </Key>
+          <Property Name="XMCPune_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Pune_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Pune_Description" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="XMCStatistika">
+          <Key>
+            <PropertyRef Name="XMCStatistika_Id" />
+          </Key>
+          <Property Name="XMCStatistika_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Statistika_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Statistika_Description" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Creator_Id" Type="bigint" Nullable="false" />
+          <Property Name="Referencer_Id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XMCTask">
+          <Key>
+            <PropertyRef Name="XMCTask_Id" />
+          </Key>
+          <Property Name="XMCTask_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Task_Name" Type="nvarchar" MaxLength="512" Nullable="false" />
+          <Property Name="Task_Description" Type="nvarchar" MaxLength="2048" Nullable="false" />
+          <Property Name="Creator_Id" Type="bigint" Nullable="false" />
+          <Property Name="Referencer_Id" Type="bigint" Nullable="false" />
+          <Property Name="XMCPune_Id" Type="bigint" Nullable="false" />
+          <Property Name="XMCProjekt_Id" Type="bigint" Nullable="false" />
+          <Property Name="XMCTipologjia_Id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XMCTipologjia">
+          <Key>
+            <PropertyRef Name="XMCTipologjia_Id" />
+          </Key>
+          <Property Name="XMCTipologjia_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tipologjia_Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Tipologjia_Description" Type="nvarchar" MaxLength="512" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XMCUsers">
+          <Key>
+            <PropertyRef Name="XMCUsers_Id" />
+          </Key>
+          <Property Name="XMCUsers_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Users_Full_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Users_Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Users_Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Users_Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Users_Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="XMCPozicion_Id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'DXP320201V.dbo.XMCUsers_Projekt' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="XMCUsers_Projekt">
+          <Key>
+            <PropertyRef Name="XMCProjekt_Id" />
+            <PropertyRef Name="XMCUsers_Id" />
+          </Key>
+          <Property Name="XMCProjekt_Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="XMCUsers_Id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_67">
+          <End Role="XMCPozicion" Type="Self.XMCPozicion" Multiplicity="1" />
+          <End Role="XMCUsers" Type="Self.XMCUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCPozicion">
+              <PropertyRef Name="XMCPozicion_Id" />
+            </Principal>
+            <Dependent Role="XMCUsers">
+              <PropertyRef Name="XMCPozicion_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_70">
+          <End Role="XMCProjekt" Type="Self.XMCProjekt" Multiplicity="1" />
+          <End Role="XMCUsers_Projekt" Type="Self.XMCUsers_Projekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCProjekt">
+              <PropertyRef Name="XMCProjekt_Id" />
+            </Principal>
+            <Dependent Role="XMCUsers_Projekt">
+              <PropertyRef Name="XMCProjekt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_73">
+          <End Role="XMCUsers" Type="Self.XMCUsers" Multiplicity="1" />
+          <End Role="XMCUsers_Projekt" Type="Self.XMCUsers_Projekt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCUsers_Projekt">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_76">
+          <End Role="XMCUsers" Type="Self.XMCUsers" Multiplicity="1" />
+          <End Role="XMCStatistika" Type="Self.XMCStatistika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCStatistika">
+              <PropertyRef Name="Creator_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_79">
+          <End Role="XMCUsers" Type="Self.XMCUsers" Multiplicity="1" />
+          <End Role="XMCStatistika" Type="Self.XMCStatistika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCStatistika">
+              <PropertyRef Name="Referencer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_82">
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="1" />
+          <End Role="XMC_Dokument" Type="Self.XMC_Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCTask">
+              <PropertyRef Name="XMCTask_Id" />
+            </Principal>
+            <Dependent Role="XMC_Dokument">
+              <PropertyRef Name="XMCTask_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_85">
+          <End Role="XMCUsers" Type="Self.XMCUsers" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="Creator_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_88">
+          <End Role="XMCUsers" Type="Self.XMCUsers" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="Referencer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_91">
+          <End Role="XMCPune" Type="Self.XMCPune" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCPune">
+              <PropertyRef Name="XMCPune_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="XMCPune_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_94">
+          <End Role="XMCProjekt" Type="Self.XMCProjekt" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCProjekt">
+              <PropertyRef Name="XMCProjekt_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="XMCProjekt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_97">
+          <End Role="XMCTipologjia" Type="Self.XMCTipologjia" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCTipologjia">
+              <PropertyRef Name="XMCTipologjia_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="XMCTipologjia_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="XMCModelStoreContainer">
+          <EntitySet Name="XMC_Dokument" EntityType="Self.XMC_Dokument" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCPozicion" EntityType="Self.XMCPozicion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCProjekt" EntityType="Self.XMCProjekt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCPune" EntityType="Self.XMCPune" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCStatistika" EntityType="Self.XMCStatistika" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCTask" EntityType="Self.XMCTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCTipologjia" EntityType="Self.XMCTipologjia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCUsers" EntityType="Self.XMCUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XMCUsers_Projekt" EntityType="Self.XMCUsers_Projekt" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[XMCUsers_Projekt].[XMCProjekt_Id] AS [XMCProjekt_Id], 
+[XMCUsers_Projekt].[XMCUsers_Id] AS [XMCUsers_Id]
+FROM [dbo].[XMCUsers_Projekt] AS [XMCUsers_Projekt]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_67" Association="Self.FK_67">
+            <End Role="XMCPozicion" EntitySet="XMCPozicion" />
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_70" Association="Self.FK_70">
+            <End Role="XMCProjekt" EntitySet="XMCProjekt" />
+            <End Role="XMCUsers_Projekt" EntitySet="XMCUsers_Projekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_73" Association="Self.FK_73">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCUsers_Projekt" EntitySet="XMCUsers_Projekt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_76" Association="Self.FK_76">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCStatistika" EntitySet="XMCStatistika" />
+          </AssociationSet>
+          <AssociationSet Name="FK_79" Association="Self.FK_79">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCStatistika" EntitySet="XMCStatistika" />
+          </AssociationSet>
+          <AssociationSet Name="FK_82" Association="Self.FK_82">
+            <End Role="XMCTask" EntitySet="XMCTask" />
+            <End Role="XMC_Dokument" EntitySet="XMC_Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_85" Association="Self.FK_85">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCTask" EntitySet="XMCTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_88" Association="Self.FK_88">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCTask" EntitySet="XMCTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_91" Association="Self.FK_91">
+            <End Role="XMCPune" EntitySet="XMCPune" />
+            <End Role="XMCTask" EntitySet="XMCTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_94" Association="Self.FK_94">
+            <End Role="XMCProjekt" EntitySet="XMCProjekt" />
+            <End Role="XMCTask" EntitySet="XMCTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_97" Association="Self.FK_97">
+            <End Role="XMCTipologjia" EntitySet="XMCTipologjia" />
+            <End Role="XMCTask" EntitySet="XMCTask" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="XMCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="XMC_Dokument">
+          <Key>
+            <PropertyRef Name="XMCDokument_Id" />
+          </Key>
+          <Property Name="XMCDokument_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dokument_Path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Dokument_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Dokument_Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="XMCTask_Id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="XMCTask" Relationship="Self.FK_82" FromRole="XMC_Dokument" ToRole="XMCTask" />
+        </EntityType>
+        <EntityType Name="XMCPozicion">
+          <Key>
+            <PropertyRef Name="XMCPozicion_Id" />
+          </Key>
+          <Property Name="XMCPozicion_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pozicion_Name" Type="String" MaxLength="155" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pozicion_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="XMCUsers" Relationship="Self.FK_67" FromRole="XMCPozicion" ToRole="XMCUsers" />
+        </EntityType>
+        <EntityType Name="XMCProjekt">
+          <Key>
+            <PropertyRef Name="XMCProjekt_Id" />
+          </Key>
+          <Property Name="XMCProjekt_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Projekt_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Projekt_Hours_Precalculated" Type="Int32" Nullable="false" />
+          <Property Name="Projekt_Description" Type="String" MaxLength="755" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="XMCTasks" Relationship="Self.FK_94" FromRole="XMCProjekt" ToRole="XMCTask" />
+          <NavigationProperty Name="XMCUsers" Relationship="Self.XMCUsers_Projekt" FromRole="XMCProjekt" ToRole="XMCUsers" />
+        </EntityType>
+        <EntityType Name="XMCPune">
+          <Key>
+            <PropertyRef Name="XMCPune_Id" />
+          </Key>
+          <Property Name="XMCPune_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Pune_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Pune_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="XMCTasks" Relationship="Self.FK_91" FromRole="XMCPune" ToRole="XMCTask" />
+        </EntityType>
+        <EntityType Name="XMCStatistika">
+          <Key>
+            <PropertyRef Name="XMCStatistika_Id" />
+          </Key>
+          <Property Name="XMCStatistika_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Statistika_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Statistika_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Creator_Id" Type="Int64" Nullable="false" />
+          <Property Name="Referencer_Id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="XMCUser" Relationship="Self.FK_76" FromRole="XMCStatistika" ToRole="XMCUsers" />
+          <NavigationProperty Name="XMCUser1" Relationship="Self.FK_79" FromRole="XMCStatistika" ToRole="XMCUsers" />
+        </EntityType>
+        <EntityType Name="XMCTask">
+          <Key>
+            <PropertyRef Name="XMCTask_Id" />
+          </Key>
+          <Property Name="XMCTask_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Task_Name" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Task_Description" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Creator_Id" Type="Int64" Nullable="false" />
+          <Property Name="Referencer_Id" Type="Int64" Nullable="false" />
+          <Property Name="XMCPune_Id" Type="Int64" Nullable="false" />
+          <Property Name="XMCProjekt_Id" Type="Int64" Nullable="false" />
+          <Property Name="XMCTipologjia_Id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="XMC_Dokument" Relationship="Self.FK_82" FromRole="XMCTask" ToRole="XMC_Dokument" />
+          <NavigationProperty Name="XMCProjekt" Relationship="Self.FK_94" FromRole="XMCTask" ToRole="XMCProjekt" />
+          <NavigationProperty Name="XMCPune" Relationship="Self.FK_91" FromRole="XMCTask" ToRole="XMCPune" />
+          <NavigationProperty Name="XMCUser" Relationship="Self.FK_85" FromRole="XMCTask" ToRole="XMCUsers" />
+          <NavigationProperty Name="XMCUser1" Relationship="Self.FK_88" FromRole="XMCTask" ToRole="XMCUsers" />
+          <NavigationProperty Name="XMCTipologjia" Relationship="Self.FK_97" FromRole="XMCTask" ToRole="XMCTipologjia" />
+        </EntityType>
+        <EntityType Name="XMCTipologjia">
+          <Key>
+            <PropertyRef Name="XMCTipologjia_Id" />
+          </Key>
+          <Property Name="XMCTipologjia_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tipologjia_Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tipologjia_Description" Type="String" MaxLength="512" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="XMCTasks" Relationship="Self.FK_97" FromRole="XMCTipologjia" ToRole="XMCTask" />
+        </EntityType>
+        <EntityType Name="XMCUser">
+          <Key>
+            <PropertyRef Name="XMCUsers_Id" />
+          </Key>
+          <Property Name="XMCUsers_Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Users_Full_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Users_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Users_Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Users_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Users_Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="XMCPozicion_Id" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="XMCPozicion" Relationship="Self.FK_67" FromRole="XMCUsers" ToRole="XMCPozicion" />
+          <NavigationProperty Name="XMCStatistikas" Relationship="Self.FK_76" FromRole="XMCUsers" ToRole="XMCStatistika" />
+          <NavigationProperty Name="XMCStatistikas1" Relationship="Self.FK_79" FromRole="XMCUsers" ToRole="XMCStatistika" />
+          <NavigationProperty Name="XMCTasks" Relationship="Self.FK_85" FromRole="XMCUsers" ToRole="XMCTask" />
+          <NavigationProperty Name="XMCTasks1" Relationship="Self.FK_88" FromRole="XMCUsers" ToRole="XMCTask" />
+          <NavigationProperty Name="XMCProjekts" Relationship="Self.XMCUsers_Projekt" FromRole="XMCUsers" ToRole="XMCProjekt" />
+        </EntityType>
+        <Association Name="FK_82">
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="1" />
+          <End Role="XMC_Dokument" Type="Self.XMC_Dokument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCTask">
+              <PropertyRef Name="XMCTask_Id" />
+            </Principal>
+            <Dependent Role="XMC_Dokument">
+              <PropertyRef Name="XMCTask_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_67">
+          <End Role="XMCPozicion" Type="Self.XMCPozicion" Multiplicity="1" />
+          <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCPozicion">
+              <PropertyRef Name="XMCPozicion_Id" />
+            </Principal>
+            <Dependent Role="XMCUsers">
+              <PropertyRef Name="XMCPozicion_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_94">
+          <End Role="XMCProjekt" Type="Self.XMCProjekt" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCProjekt">
+              <PropertyRef Name="XMCProjekt_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="XMCProjekt_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_91">
+          <End Role="XMCPune" Type="Self.XMCPune" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCPune">
+              <PropertyRef Name="XMCPune_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="XMCPune_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_76">
+          <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="1" />
+          <End Role="XMCStatistika" Type="Self.XMCStatistika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCStatistika">
+              <PropertyRef Name="Creator_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_79">
+          <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="1" />
+          <End Role="XMCStatistika" Type="Self.XMCStatistika" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCStatistika">
+              <PropertyRef Name="Referencer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_85">
+          <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="Creator_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_88">
+          <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCUsers">
+              <PropertyRef Name="XMCUsers_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="Referencer_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_97">
+          <End Role="XMCTipologjia" Type="Self.XMCTipologjia" Multiplicity="1" />
+          <End Role="XMCTask" Type="Self.XMCTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XMCTipologjia">
+              <PropertyRef Name="XMCTipologjia_Id" />
+            </Principal>
+            <Dependent Role="XMCTask">
+              <PropertyRef Name="XMCTipologjia_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="XMCUsers_Projekt">
+          <End Role="XMCProjekt" Type="Self.XMCProjekt" Multiplicity="*" />
+          <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="XMCEntitites" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="XMC_Dokument" EntityType="Self.XMC_Dokument" />
+          <EntitySet Name="XMCPozicions" EntityType="Self.XMCPozicion" />
+          <EntitySet Name="XMCProjekts" EntityType="Self.XMCProjekt" />
+          <EntitySet Name="XMCPunes" EntityType="Self.XMCPune" />
+          <EntitySet Name="XMCStatistikas" EntityType="Self.XMCStatistika" />
+          <EntitySet Name="XMCTasks" EntityType="Self.XMCTask" />
+          <EntitySet Name="XMCTipologjias" EntityType="Self.XMCTipologjia" />
+          <EntitySet Name="XMCUsers" EntityType="Self.XMCUser" />
+          <AssociationSet Name="FK_82" Association="Self.FK_82">
+            <End Role="XMCTask" EntitySet="XMCTasks" />
+            <End Role="XMC_Dokument" EntitySet="XMC_Dokument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_67" Association="Self.FK_67">
+            <End Role="XMCPozicion" EntitySet="XMCPozicions" />
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_94" Association="Self.FK_94">
+            <End Role="XMCProjekt" EntitySet="XMCProjekts" />
+            <End Role="XMCTask" EntitySet="XMCTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_91" Association="Self.FK_91">
+            <End Role="XMCPune" EntitySet="XMCPunes" />
+            <End Role="XMCTask" EntitySet="XMCTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_76" Association="Self.FK_76">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCStatistika" EntitySet="XMCStatistikas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_79" Association="Self.FK_79">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCStatistika" EntitySet="XMCStatistikas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_85" Association="Self.FK_85">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCTask" EntitySet="XMCTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_88" Association="Self.FK_88">
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+            <End Role="XMCTask" EntitySet="XMCTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_97" Association="Self.FK_97">
+            <End Role="XMCTipologjia" EntitySet="XMCTipologjias" />
+            <End Role="XMCTask" EntitySet="XMCTasks" />
+          </AssociationSet>
+          <AssociationSet Name="XMCUsers_Projekt" Association="Self.XMCUsers_Projekt">
+            <End Role="XMCProjekt" EntitySet="XMCProjekts" />
+            <End Role="XMCUsers" EntitySet="XMCUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="XMCModelStoreContainer" CdmEntityContainer="XMCEntitites">
+          <EntitySetMapping Name="XMC_Dokument">
+            <EntityTypeMapping TypeName="XMCModel.XMC_Dokument">
+              <MappingFragment StoreEntitySet="XMC_Dokument">
+                <ScalarProperty Name="XMCDokument_Id" ColumnName="XMCDokument_Id" />
+                <ScalarProperty Name="Dokument_Path" ColumnName="Dokument_Path" />
+                <ScalarProperty Name="Dokument_Type" ColumnName="Dokument_Type" />
+                <ScalarProperty Name="Dokument_Content" ColumnName="Dokument_Content" />
+                <ScalarProperty Name="XMCTask_Id" ColumnName="XMCTask_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCPozicions">
+            <EntityTypeMapping TypeName="XMCModel.XMCPozicion">
+              <MappingFragment StoreEntitySet="XMCPozicion">
+                <ScalarProperty Name="XMCPozicion_Id" ColumnName="XMCPozicion_Id" />
+                <ScalarProperty Name="Pozicion_Name" ColumnName="Pozicion_Name" />
+                <ScalarProperty Name="Pozicion_Description" ColumnName="Pozicion_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCProjekts">
+            <EntityTypeMapping TypeName="XMCModel.XMCProjekt">
+              <MappingFragment StoreEntitySet="XMCProjekt">
+                <ScalarProperty Name="XMCProjekt_Id" ColumnName="XMCProjekt_Id" />
+                <ScalarProperty Name="Projekt_Name" ColumnName="Projekt_Name" />
+                <ScalarProperty Name="Projekt_Hours_Precalculated" ColumnName="Projekt_Hours_Precalculated" />
+                <ScalarProperty Name="Projekt_Description" ColumnName="Projekt_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCPunes">
+            <EntityTypeMapping TypeName="XMCModel.XMCPune">
+              <MappingFragment StoreEntitySet="XMCPune">
+                <ScalarProperty Name="XMCPune_Id" ColumnName="XMCPune_Id" />
+                <ScalarProperty Name="Pune_Name" ColumnName="Pune_Name" />
+                <ScalarProperty Name="Pune_Description" ColumnName="Pune_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCStatistikas">
+            <EntityTypeMapping TypeName="XMCModel.XMCStatistika">
+              <MappingFragment StoreEntitySet="XMCStatistika">
+                <ScalarProperty Name="XMCStatistika_Id" ColumnName="XMCStatistika_Id" />
+                <ScalarProperty Name="Statistika_Name" ColumnName="Statistika_Name" />
+                <ScalarProperty Name="Statistika_Description" ColumnName="Statistika_Description" />
+                <ScalarProperty Name="Creator_Id" ColumnName="Creator_Id" />
+                <ScalarProperty Name="Referencer_Id" ColumnName="Referencer_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCTasks">
+            <EntityTypeMapping TypeName="XMCModel.XMCTask">
+              <MappingFragment StoreEntitySet="XMCTask">
+                <ScalarProperty Name="XMCTask_Id" ColumnName="XMCTask_Id" />
+                <ScalarProperty Name="Task_Name" ColumnName="Task_Name" />
+                <ScalarProperty Name="Task_Description" ColumnName="Task_Description" />
+                <ScalarProperty Name="Creator_Id" ColumnName="Creator_Id" />
+                <ScalarProperty Name="Referencer_Id" ColumnName="Referencer_Id" />
+                <ScalarProperty Name="XMCPune_Id" ColumnName="XMCPune_Id" />
+                <ScalarProperty Name="XMCProjekt_Id" ColumnName="XMCProjekt_Id" />
+                <ScalarProperty Name="XMCTipologjia_Id" ColumnName="XMCTipologjia_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCTipologjias">
+            <EntityTypeMapping TypeName="XMCModel.XMCTipologjia">
+              <MappingFragment StoreEntitySet="XMCTipologjia">
+                <ScalarProperty Name="XMCTipologjia_Id" ColumnName="XMCTipologjia_Id" />
+                <ScalarProperty Name="Tipologjia_Name" ColumnName="Tipologjia_Name" />
+                <ScalarProperty Name="Tipologjia_Description" ColumnName="Tipologjia_Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XMCUsers">
+            <EntityTypeMapping TypeName="XMCModel.XMCUser">
+              <MappingFragment StoreEntitySet="XMCUsers">
+                <ScalarProperty Name="XMCUsers_Id" ColumnName="XMCUsers_Id" />
+                <ScalarProperty Name="Users_Full_Name" ColumnName="Users_Full_Name" />
+                <ScalarProperty Name="Users_Email" ColumnName="Users_Email" />
+                <ScalarProperty Name="Users_Username" ColumnName="Users_Username" />
+                <ScalarProperty Name="Users_Password" ColumnName="Users_Password" />
+                <ScalarProperty Name="Users_Description" ColumnName="Users_Description" />
+                <ScalarProperty Name="XMCPozicion_Id" ColumnName="XMCPozicion_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="XMCUsers_Projekt" TypeName="XMCModel.XMCUsers_Projekt" StoreEntitySet="XMCUsers_Projekt">
+            <EndProperty Name="XMCProjekt">
+              <ScalarProperty Name="XMCProjekt_Id" ColumnName="XMCProjekt_Id" />
+            </EndProperty>
+            <EndProperty Name="XMCUsers">
+              <ScalarProperty Name="XMCUsers_Id" ColumnName="XMCUsers_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
