@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="XMCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="XMCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="XMC_Dokument">
           <Key>
             <PropertyRef Name="XMCDokument_Id" />
@@ -84,7 +84,7 @@
           <Property Name="XMCPozicion_Id" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'DXP320201V.dbo.XMCUsers_Projekt' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'DiplomaXMC.dbo.XMCUsers_Projekt' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="XMCUsers_Projekt">
           <Key>
             <PropertyRef Name="XMCProjekt_Id" />
@@ -236,9 +236,9 @@ warning 6002: The table/view 'DXP320201V.dbo.XMCUsers_Projekt' does not have a p
           <EntitySet Name="XMCUsers" EntityType="Self.XMCUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="XMCUsers_Projekt" EntityType="Self.XMCUsers_Projekt" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[XMCUsers_Projekt].[XMCProjekt_Id] AS [XMCProjekt_Id], 
-[XMCUsers_Projekt].[XMCUsers_Id] AS [XMCUsers_Id]
-FROM [dbo].[XMCUsers_Projekt] AS [XMCUsers_Projekt]</DefiningQuery>
+    [XMCUsers_Projekt].[XMCProjekt_Id] AS [XMCProjekt_Id], 
+    [XMCUsers_Projekt].[XMCUsers_Id] AS [XMCUsers_Id]
+    FROM [dbo].[XMCUsers_Projekt] AS [XMCUsers_Projekt]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_67" Association="Self.FK_67">
             <End Role="XMCPozicion" EntitySet="XMCPozicion" />
@@ -500,7 +500,7 @@ FROM [dbo].[XMCUsers_Projekt] AS [XMCUsers_Projekt]</DefiningQuery>
           <End Role="XMCProjekt" Type="Self.XMCProjekt" Multiplicity="*" />
           <End Role="XMCUsers" Type="Self.XMCUser" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="XMCEntitites" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="XMCEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="XMC_Dokument" EntityType="Self.XMC_Dokument" />
           <EntitySet Name="XMCPozicions" EntityType="Self.XMCPozicion" />
           <EntitySet Name="XMCProjekts" EntityType="Self.XMCProjekt" />
@@ -555,7 +555,7 @@ FROM [dbo].[XMCUsers_Projekt] AS [XMCUsers_Projekt]</DefiningQuery>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="XMCModelStoreContainer" CdmEntityContainer="XMCEntitites">
+        <EntityContainerMapping StorageEntityContainer="XMCModelStoreContainer" CdmEntityContainer="XMCEntities">
           <EntitySetMapping Name="XMC_Dokument">
             <EntityTypeMapping TypeName="XMCModel.XMC_Dokument">
               <MappingFragment StoreEntitySet="XMC_Dokument">
@@ -666,7 +666,7 @@ FROM [dbo].[XMCUsers_Projekt] AS [XMCUsers_Projekt]</DefiningQuery>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

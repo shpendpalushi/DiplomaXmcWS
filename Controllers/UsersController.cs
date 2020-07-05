@@ -14,7 +14,7 @@ namespace DiplomaXMCWS.Controllers
         public IHttpActionResult GetAllUsers()
         {
             IList<User> users = null;
-            using (XMCEntitites db = new XMCEntitites())
+            using (XMCEntities db = new XMCEntities())
             {
                 users = db.XMCUsers.Select(u => new User()
                 {
@@ -22,6 +22,7 @@ namespace DiplomaXMCWS.Controllers
                     Full_Name = u.Users_Full_Name,
                     Email = u.Users_Email,
                     Description = u.Users_Description,
+                    Username = u.Users_Username,
                     Password = u.Users_Password,
                     PozicionId = u.XMCPozicion_Id
                 }
