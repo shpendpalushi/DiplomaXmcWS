@@ -31,5 +31,30 @@ namespace DiplomaXMCWS.Controllers
                 return Ok(tasks);
             }
         }
+
+        public IHttpActionResult GetUserTasks(int userId)
+        {
+            IList<Tasks> tasks = null;
+            using (XMCEntities db = new XMCEntities())
+            {
+                tasks = db.XMCTasks.Select(t => new Tasks()
+                {
+                    XMCTask_Id = t.XMCTask_Id,
+                    Task_Name = t.Task_Name,
+                    Task_Description = t.Task_Description,
+                    Creator_Id = t.Creator_Id,
+                    Referencer_Id = t.Referencer_Id,
+                    XMCPune_Id = t.XMCPune_Id,
+                    XMCProjekt_Id = t.XMCProjekt_Id,
+                    XMCTipologjia_Id = t.XMCTipologjia_Id
+                }).ToList<Tasks>();
+                var usersTasks = from t in tasks
+                                 where t.Creator_Id == userId
+                                 select t;
+                return Ok(usersTasks);
+            }
+        }
     }
+
+
 }
