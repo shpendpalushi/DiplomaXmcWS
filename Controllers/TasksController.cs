@@ -2,6 +2,7 @@
 using DiplomaXMCWS.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -53,6 +54,46 @@ namespace DiplomaXMCWS.Controllers
                                  select t;
                 return Ok(usersTasks);
             }
+        }
+
+        [HttpPost]
+        public IHttpActionResult PostNewTask( Tasks tasks)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid data!");
+            try
+            {
+                using (XMCEntities db = new XMCEntities())
+                {
+                    db.XMCTasks.Add(new XMCTask()
+                    {
+                        Task_Name = tasks.Task_Name,
+                        Task_Description = tasks.Task_Description,
+                        Creator_Id = tasks.Creator_Id,
+                        Referencer_Id = tasks.Referencer_Id,
+                        XMCPune_Id = tasks.XMCPune_Id,
+                        XMCProjekt_Id = tasks.XMCProjekt_Id,
+                        XMCTipologjia_Id = tasks.XMCTipologjia_Id
+                    });
+                    db.SaveChanges();
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
+            return Ok();
+
         }
     }
 

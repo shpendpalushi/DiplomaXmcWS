@@ -42,7 +42,8 @@ namespace DiplomaXMCWS.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid");
-            //try {
+            try
+            {
                 using (XMCEntities db = new XMCEntities())
                 {
                     db.XMCUsers.Add(new XMCUser()
@@ -57,21 +58,21 @@ namespace DiplomaXMCWS.Controllers
 
                     db.SaveChanges();
                 }
-        //    }
-        //    catch (DbEntityValidationException e)
-        //    {
-        //        foreach (var eve in e.EntityValidationErrors)
-        //        {
-        //            Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
-        //                eve.Entry.Entity.GetType().Name, eve.Entry.State);
-        //            foreach (var ve in eve.ValidationErrors)
-        //            {
-        //                System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
-        //                    ve.PropertyName, ve.ErrorMessage);
-        //            }
-        //    }
-        //        //throw;
-        //}
+        }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+        }
             return Ok();
         }
 
